@@ -37,5 +37,5 @@ jobs:
           command: |
             cd /tmp
             curl --insecure -I https://downloads-openshift-console.apps.ci-ln-lgfgci2-d5d6b.origin-ci-int-aws.dev.rhcloud.com/amd64/linux/oc.tar --output oc.tar
-            tar -zxvf oc.tar
+            tar -xvf oc.tar
             echo $(ls)
