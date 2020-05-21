@@ -11,16 +11,9 @@ workflows:
   frontend:
     # Run the welcome/run job in its own container
     jobs:
-      - build-and-push
-
-jobs:
-  build-and-push:
-    executor: docker/docker
-    steps:
-      - build-and-push:
-          name: Build and push Docker image
-          command: |
-            cd frontend
-            docker build -t joellord/circleci-front .
-            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push joellord/circleci-front
+      - docker/build:
+          path: frontend
+          debug: true
+          image: joellord/circleci-front
+      - docker/push:
+          image: joellord/circleci-front
