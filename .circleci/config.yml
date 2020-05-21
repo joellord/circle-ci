@@ -29,4 +29,4 @@ jobs:
           command: |
             oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://api.$OC_SERVER:6443
             oc project $OC_PROJECT
-            oc import-image docker.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front
+            oc import-image docker.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front --confirm
