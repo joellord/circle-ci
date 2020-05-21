@@ -40,7 +40,6 @@ jobs:
             tar -xvf oc.tar
             mkdir ~/.local && mkdir ~/.local/bin
             cp oc ~/.local/bin
-            apk add ca-certificates
             echo "Login to oc"
             oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://$OC_SERVER:6443
             echo $OC_PWD | docker login --insecure-registry=$OC_SERVER:6443 -u $OC_LOGIN --password-stdin $OC_SERVER:6443
