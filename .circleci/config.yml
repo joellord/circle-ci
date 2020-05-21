@@ -25,13 +25,13 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      # - run:
-      #     name: Build and push Docker image
-          # command: |
-          #   cd frontend
-          #   docker build -t joellord/circleci-front .
-          #   echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-          #   docker push joellord/circleci-front
+      - run:
+          name: Build and push Docker image
+          command: |
+            cd frontend
+            docker build -t joellord/circleci-front .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push joellord/circleci-front
       - run:
           name: Install oc
           command: |
@@ -40,9 +40,8 @@ jobs:
             tar -xvf oc.tar
             mkdir ~/.local && mkdir ~/.local/bin
             cp oc ~/.local/bin
-            echo "Login to oc"
+      - run:
+          name: Login to OpenShift
+          command: |
             oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://$OC_SERVER:6443
-            echo $OC_PWD | docker login --insecure-registry=$OC_SERVER:6443 -u $OC_LOGIN --password-stdin $OC_SERVER:6443
-            echo "Push to OpenShift internal registry"
-            docker tag joellord/circleci-front $OC_SERVER:6443/joellord/circleci-front
-            docker push $OC_SERVER:6443/joellord/circleci-front
+            oc import-image docker.io/joellord/circleci-front
