@@ -6,14 +6,32 @@ orbs:
   # welcome: circleci/welcome-orb@0.4.1
   docker: circleci/docker@1.0.1
 # Orchestrate or schedule a set of jobs
-workflows:
-  # Name the workflow "welcome"
-  frontend:
-    # Run the welcome/run job in its own container
-    jobs:
-      - docker/build:
-          path: frontend
-          debug: true
-          image: joellord/circleci-front
-      - docker/push:
-          image: joellord/circleci-front
+# workflows:
+#   # Name the workflow "welcome"
+#   frontend:
+#     # Run the welcome/run job in its own container
+#     jobs:
+#       - docker/build:
+#           path: frontend
+#           debug: true
+#           image: joellord/circleci-front
+#       - docker/push:
+#           image: joellord/circleci-front
+
+jobs:
+  build:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - run:
+          name: Build and push Docker image
+          command: |
+            cd frontend
+            docker build -t joellord/circleci-front .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push joellord/circleci-front
+      - run:
+          name: Echo Status
+          command: |
+            echo "Done? I think"
