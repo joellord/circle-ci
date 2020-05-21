@@ -25,7 +25,7 @@ jobs:
             mkdir ~/.local && mkdir ~/.local/bin
             cp oc ~/.local/bin
       - run:
-          name: Login to OpenShift
+          name: Import new image to OpenShift
           command: |
             oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://$OC_SERVER:6443
             oc import-image docker.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front
