@@ -25,5 +25,6 @@ WORKDIR /code
 COPY --from=0 /app/dist .
 COPY start_nginx.sh /
 RUN chmod +x /start_nginx.sh
+EXPOSE 8080
 USER 1000
 ENTRYPOINT [ "/start_nginx.sh" ]
