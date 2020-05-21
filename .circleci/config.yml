@@ -40,9 +40,10 @@ jobs:
             tar -xvf oc.tar
             mkdir ~/.local && mkdir ~/.local/bin
             cp oc ~/.local/bin
+            apk add ca-certificates
             echo "Login to oc"
             oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://$OC_SERVER:6443
-            echo $OC_PWD | docker login -u $OC_LOGIN --password-stdin $OC_SERVER:443
+            echo $OC_PWD | docker login -u $OC_LOGIN --password-stdin $OC_SERVER:6443
             echo "Push to OpenShift internal registry"
-            docker tag joellord/circleci-front $OC_SERVER:443/joellord/circleci-front
-            docker push $OC_SERVER:443/joellord/circleci-front
+            docker tag joellord/circleci-front $OC_SERVER:6443/joellord/circleci-front
+            docker push $OC_SERVER:6443/joellord/circleci-front
