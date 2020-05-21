@@ -21,7 +21,7 @@ RUN npm run build
 
 FROM nginx:1.17
 COPY ./nginx.conf /etc/nginx/nginx.conf
-WORKDIR /usr/share/nginx/html
+WORKDIR /code
 COPY --from=0 /app/dist .
 COPY start_nginx.sh /
 RUN chmod +x /start_nginx.sh
