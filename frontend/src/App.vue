@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
+    <br/><br/>Hello from Circle CI<br/>
     <ContactApi />
   </div>
 </template>
