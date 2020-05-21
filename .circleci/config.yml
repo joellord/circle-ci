@@ -20,12 +20,12 @@ jobs:
           name: Install oc
           command: |
             cd /tmp
-            wget --no-check-certificate https://downloads-openshift-console.apps.ci-ln-lgfgci2-d5d6b.origin-ci-int-aws.dev.rhcloud.com/amd64/linux/oc.tar
+            wget --no-check-certificate https://downloads-openshift-console.apps.$OC_SERVER/amd64/linux/oc.tar
             tar -xvf oc.tar
             mkdir ~/.local && mkdir ~/.local/bin
             cp oc ~/.local/bin
       - run:
           name: Import new image to OpenShift
           command: |
-            oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://$OC_SERVER:6443
+            oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://api.$OC_SERVER:6443
             oc import-image docker.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front
