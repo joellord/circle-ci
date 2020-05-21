@@ -13,9 +13,9 @@ jobs:
           name: Build and push Docker image
           command: |
             cd frontend
-            docker build -t $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+            docker build -t $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+            docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front
       - run:
           name: Install oc
           command: |
@@ -28,4 +28,4 @@ jobs:
           name: Login to OpenShift
           command: |
             oc login --insecure-skip-tls-verify=true -u $OC_LOGIN -p $OC_PWD https://$OC_SERVER:6443
-            oc import-image docker.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+            oc import-image docker.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-front
